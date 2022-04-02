@@ -45,8 +45,8 @@ def animate(frame_number):
     robot.show(d)
     
 
-robot = Robot()
 if __name__ == '__main__':
+    robot = Robot()
     fig = plt.gcf()
     ax = plt.axes(xlim=(0,xlimit), ylim=(0,ylimit))
     d, = plt.plot(robot.x, robot.y, 'go')
