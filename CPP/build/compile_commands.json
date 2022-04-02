@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/toshan/JDE_Challenges/CPP/build",
+  "command": "/bin/x86_64-linux-gnu-g++-9    -g   -std=gnu++11 -o CMakeFiles/JDE_CPP_Challenge.dir/labyrinth.cpp.o -c /home/toshan/JDE_Challenges/CPP/labyrinth.cpp",
+  "file": "/home/toshan/JDE_Challenges/CPP/labyrinth.cpp"
+}
+]
