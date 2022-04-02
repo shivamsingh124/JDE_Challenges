@@ -36,18 +36,20 @@ class Robot:
         self.x += self.vx
         self.y += self.vy
 
+    def show(self, d):
+        d.set_data(self.x, self.y)
+
 def animate(frame_number):
-    print('frame_number:', frame_number)
 
     robot.move()
-
-    d.set_data([robot.x],[robot.y])
+    robot.show(d)
+    
 
 robot = Robot()
+if __name__ == '__main__':
+    fig = plt.gcf()
+    ax = plt.axes(xlim=(0,xlimit), ylim=(0,ylimit))
+    d, = plt.plot(robot.x, robot.y, 'go')
+    anim = animation.FuncAnimation(fig, animate, frames=200, interval=10, repeat=True)
 
-fig = plt.gcf()
-ax = plt.axes(xlim=(0,xlimit), ylim=(0,ylimit))
-d, = plt.plot(robot.x, robot.y, 'go')
-anim = animation.FuncAnimation(fig, animate, frames=200, interval=10, repeat=True)
-
-anim.save("robot-particle-opposite-bounce.gif", fps=24)
+    anim.save("robot-particle-opposite-bounce.gif", fps=24)
