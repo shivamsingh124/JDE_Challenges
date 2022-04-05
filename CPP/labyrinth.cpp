@@ -85,6 +85,9 @@ void findLongestPath(vector<vector<string>> &labyrinth, vector<vector<bool>> &vi
         return;
     }
 
+    if (dist > max_dist || max_dist == 0){
+        labyrinth[s_r][s_c] = to_string(dist);
+    }
     // if the destination is found, update 'max_dist'
     if(s_r == d_r && s_c == d_c){
         max_dist = max(dist, max_dist);
@@ -94,28 +97,9 @@ void findLongestPath(vector<vector<string>> &labyrinth, vector<vector<bool>> &vi
     visited[s_r][s_c] = true;
 
     //iterate through the remaining 8 directions
-
-    // bottom
-    if(isSafe(labyrinth, visited, s_r + 1, s_c)){
-        findLongestPath(labyrinth, visited, s_r + 1, s_c, d_r, d_c, 
-        max_dist, dist + 1);
-    }
-
-    // right
-    if(isSafe(labyrinth, visited, s_r, s_c + 1)){
-        findLongestPath(labyrinth, visited, s_r, s_c + 1, d_r, d_c, 
-        max_dist, dist + 1);
-    }
-
     // top
     if(isSafe(labyrinth, visited, s_r - 1, s_c)){
         findLongestPath(labyrinth, visited, s_r - 1, s_c, d_r, d_c, 
-        max_dist, dist + 1);
-    }
-
-    // left
-    if(isSafe(labyrinth, visited, s_r, s_c - 1)){
-        findLongestPath(labyrinth, visited, s_r, s_c - 1, d_r, d_c, 
         max_dist, dist + 1);
     }
 
@@ -128,6 +112,24 @@ void findLongestPath(vector<vector<string>> &labyrinth, vector<vector<bool>> &vi
     // top-left
     if(isSafe(labyrinth, visited, s_r - 1, s_c - 1)){
         findLongestPath(labyrinth, visited, s_r - 1, s_c - 1, d_r, d_c, 
+        max_dist, dist + 1);
+    }
+
+    // right
+    if(isSafe(labyrinth, visited, s_r, s_c + 1)){
+        findLongestPath(labyrinth, visited, s_r, s_c + 1, d_r, d_c, 
+        max_dist, dist + 1);
+    } 
+
+    // left
+    if(isSafe(labyrinth, visited, s_r, s_c - 1)){
+        findLongestPath(labyrinth, visited, s_r, s_c - 1, d_r, d_c, 
+        max_dist, dist + 1);
+    }
+
+    // bottom
+    if(isSafe(labyrinth, visited, s_r + 1, s_c)){
+        findLongestPath(labyrinth, visited, s_r + 1, s_c, d_r, d_c, 
         max_dist, dist + 1);
     }
 
@@ -144,7 +146,6 @@ void findLongestPath(vector<vector<string>> &labyrinth, vector<vector<bool>> &vi
     }
 
     visited[s_r][s_c] = false;
-
 }
 
 void createResultantLabyrinth(vector<vector<string>> &labyrinth, vector<pair<int, int>> &destinations, vector<pair<int, int>> &sources){
@@ -157,18 +158,18 @@ void createResultantLabyrinth(vector<vector<string>> &labyrinth, vector<pair<int
     for(int i=0; i < destinations.size(); i++){
         for(int j=0; j< sources.size(); j++){
             vector<vector<bool>> visited;
+            vector<vector<string>> t_laby = labyrinth;
             visited.resize(m, vector<bool>(n));
 
             int max_dist = 0;
 
-            findLongestPath(labyrinth, visited, sources[i].first, sources[i].second,
+            findLongestPath(t_laby, visited, sources[i].first, sources[i].second,
             destinations[j].first, destinations[j].second, max_dist, 0);
             cout << "Maximum distance for " << i << " " << j <<" is " << max_dist + 1 << endl;
+            // printVector(t_laby);
         }
         
     }
-
-    
 
 }
 
@@ -177,6 +178,10 @@ int main(){
     inputFile.open("input.txt", ios::in);
     string s;
     getline(inputFile, s);
+    // Remove newline character from the string
+    if (!s.empty() && s[s.length()-1] == '\n') {
+        s.erase(s.length()-1);
+    }
     int t = stoi(s);
     while(t-- > 0){
         // Create Labyrinth in vector string representation
