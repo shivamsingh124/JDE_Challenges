@@ -19,8 +19,8 @@ class Turtle_Node(Node):
         if self.i < 3:
             msg.pose.position.x = self.x_positions[self.i]
             msg.pose.position.y = self.y_positions[self.i]
-        self.publisher.publish(msg)
-        self.get_logger().info('Publishing: "%s"' % msg.pose.position)
+            self.publisher.publish(msg)
+            self.get_logger().info('Publishing: "%s"' % msg.pose.position)
         self.i += 1
 
 def main(args=None):

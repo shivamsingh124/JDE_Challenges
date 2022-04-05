@@ -27,6 +27,16 @@ void printVector(vector<vector<string>> const &v){
         }
         cout << endl;
     }
+}
+
+void writeVector(vector<vector<string>> const &v){
+    ofstream out("output.txt");
+    for(int i = 0; i < v.size(); i++){
+        for(int j = 0; j < v[i].size(); j++){
+            out << v[i][j];
+        }
+        out << endl;
+    }
 
 }
 
