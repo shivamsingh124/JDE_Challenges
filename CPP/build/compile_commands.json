@@ -1,7 +1,7 @@
 [
 {
   "directory": "/home/toshan/JDE_Challenges/CPP/build",
-  "command": "/usr/bin/clang++-10    -g   -std=gnu++11 -o CMakeFiles/JDE_CPP_Challenge.dir/labyrinth.cpp.o -c /home/toshan/JDE_Challenges/CPP/labyrinth.cpp",
+  "command": "/usr/bin/c++  -DHOME=\\\"/home/toshan/JDE_Challenges/CPP\\\"  -g   -std=gnu++11 -o CMakeFiles/JDE_CPP_Challenge.dir/labyrinth.cpp.o -c /home/toshan/JDE_Challenges/CPP/labyrinth.cpp",
   "file": "/home/toshan/JDE_Challenges/CPP/labyrinth.cpp"
 }
 ]

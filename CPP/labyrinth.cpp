@@ -29,14 +29,17 @@ void printVector(vector<vector<string>> const &v){
     }
 }
 
-void writeVector(vector<vector<string>> const &v){
-    ofstream out("output.txt");
+void writeVector(vector<vector<string>> const &v, int dist){
+    string filename = HOME + (string)"/output.txt";
+    ofstream out(filename);
+    out << dist << '\n';
     for(int i = 0; i < v.size(); i++){
         for(int j = 0; j < v[i].size(); j++){
             out << v[i][j];
         }
         out << endl;
     }
+    out.close();
 
 }
 
@@ -165,6 +168,8 @@ void createResultantLabyrinth(vector<vector<string>> &labyrinth, vector<pair<int
     int m = labyrinth.size();
     int n = labyrinth[0].size();
 
+    int write_dist = 0;
+    vector<vector<string>> write_laby = labyrinth;
     for(int i=0; i < destinations.size(); i++){
         for(int j=0; j< sources.size(); j++){
             vector<vector<bool>> visited;
@@ -175,17 +180,23 @@ void createResultantLabyrinth(vector<vector<string>> &labyrinth, vector<pair<int
 
             findLongestPath(t_laby, visited, sources[i].first, sources[i].second,
             destinations[j].first, destinations[j].second, max_dist, 0);
-            cout << "Maximum distance for " << i << " " << j <<" is " << max_dist + 1 << endl;
-            // printVector(t_laby);
+            max_dist++;
+            // cout << "Maximum distance for " << i << " " << j <<" is " << max_dist + 1 << endl;
+            if(max_dist > write_dist){
+                write_dist = max_dist;
+                write_laby = t_laby;
+            }
         }
-        
     }
+    writeVector(write_laby, write_dist);
 
 }
 
 int main(){
     fstream inputFile;
-    inputFile.open("input.txt", ios::in);
+    string filename = HOME + (string)"/input.txt";
+    cout << filename << endl;
+    inputFile.open(filename, ios::in);
     string s;
     getline(inputFile, s);
     // Remove newline character from the string
