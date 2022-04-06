@@ -1,3 +1,0 @@
-/home/toshan/JDE_Challenges/CPP/build/CMakeFiles/rebuild_cache.dir
-/home/toshan/JDE_Challenges/CPP/build/CMakeFiles/edit_cache.dir
-/home/toshan/JDE_Challenges/CPP/build/CMakeFiles/JDE_CPP_Challenge.dir
