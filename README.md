@@ -18,4 +18,4 @@ I've used the dummy_robot that is provided alongwith ROS2 to demonstrate the Las
 
 We can also see the Laser Scan visualization through the turtlebot
 
-![Laser Viz](assets/Laser_Viz_Turtle.png)
+![Laser Viz](assets/laser_white.png)
