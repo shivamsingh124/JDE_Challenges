@@ -15,3 +15,7 @@ The contents are as follows:
 I've used the dummy_robot that is provided alongwith ROS2 to demonstrate the Laser Scan
 
 ![Laser Scan Challenge Video](assets/Laser_Scan.gif)
+
+We can also see the Laser Scan visualization through the turtlebot
+
+![Laser Viz](assets/Laser_Viz_Turtle.png)
