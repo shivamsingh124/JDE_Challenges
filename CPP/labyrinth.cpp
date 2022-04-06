@@ -4,19 +4,25 @@
 #include <vector>
 using namespace std;
 
-vector<vector<string>> getLabyrinth(fstream* inputFile){
-    vector<vector<string>> ans;
-    while(inputFile->is_open()){
+vector<vector<vector<string>>> getLabyrinth(fstream* inputFile){
+    vector<vector<vector<string>>> ans;
+    while(!inputFile->eof()){
+        vector<vector<string>> temp;
         string s;
         while(getline(*inputFile, s)){
+            cout << s << endl;
             vector<string> line;
+            if (s == "/") {
+                break;
+            }
             for(int i=0; i<s.size(); i++){
                 line.push_back(string(1, s[i]));
             }
-            ans.push_back(line);
+            temp.push_back(line);
         }
-        inputFile->close();
+        ans.push_back(temp);
     }
+    inputFile->close();
     return ans;
 }
 
@@ -31,7 +37,7 @@ void printVector(vector<vector<string>> const &v){
 
 void writeVector(vector<vector<string>> const &v, int dist){
     string filename = HOME + (string)"/output.txt";
-    ofstream out(filename);
+    ofstream out(filename, ios_base::app);
     out << dist << '\n';
     for(int i = 0; i < v.size(); i++){
         for(int j = 0; j < v[i].size(); j++){
@@ -101,6 +107,7 @@ void findLongestPath(vector<vector<string>> &labyrinth, vector<vector<bool>> &vi
     if (dist > max_dist || max_dist == 0){
         labyrinth[s_r][s_c] = to_string(dist);
     }
+    
     // if the destination is found, update 'max_dist'
     if(s_r == d_r && s_c == d_c){
         max_dist = max(dist, max_dist);
@@ -188,7 +195,12 @@ void createResultantLabyrinth(vector<vector<string>> &labyrinth, vector<pair<int
             }
         }
     }
-    writeVector(write_laby, write_dist);
+    if (write_dist == 1){
+        writeVector(labyrinth, -1);
+    }
+    else{
+        writeVector(write_laby, write_dist);
+    }
 
 }
 
@@ -197,27 +209,29 @@ int main(){
     string filename = HOME + (string)"/input.txt";
     cout << filename << endl;
     inputFile.open(filename, ios::in);
-    string s;
-    getline(inputFile, s);
-    // Remove newline character from the string
-    if (!s.empty() && s[s.length()-1] == '\n') {
-        s.erase(s.length()-1);
-    }
-    int t = stoi(s);
-    while(t-- > 0){
-        // Create Labyrinth in vector string representation
-        vector<vector<string>> labyrinth = getLabyrinth(&inputFile);
+
+    // Create Labyrinth in vector string representation
+    vector<vector<vector<string>>> labyrinths = getLabyrinth(&inputFile);
+
+    for(int i = 0; i < labyrinths.size(); i++){
+        vector<vector<string>> labyrinth = labyrinths[i];
         // Print matrix
         printVector(labyrinth);
 
-        // Get a vector of possible destinations
-        vector<pair<int, int>> destinations = getDestinations(labyrinth);
-        // Get a vector of possible sources
-        vector<pair<int, int>> sources = getSources(labyrinth);
         // preliminary check for a valid labyrinth
         if(checkValid(labyrinth)){
+            // Get a vector of possible destinations
+            vector<pair<int, int>> destinations = getDestinations(labyrinth);
+
+            // Get a vector of possible sources
+            vector<pair<int, int>> sources = getSources(labyrinth);
+
             createResultantLabyrinth(labyrinth, destinations, sources);
+        } else {
+            writeVector(labyrinth, -1);
         }
     }
+
+    inputFile.close();
     return 0;
 }
