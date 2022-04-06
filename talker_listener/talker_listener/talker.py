@@ -2,7 +2,6 @@ import rclpy
 from rclpy.node import Node
 
 from std_msgs.msg import String
-# Consider adding a custom message to show the date
 
 class Talker_Node(Node):
     def __init__(self):
@@ -15,6 +14,7 @@ class Talker_Node(Node):
     def timer_callback(self):
         msg = String()
         msg.data = 'Hello! ROS2 is fun'
+        # Publish message to '/jde_task' topic
         self.publisher.publish(msg)
         self.get_logger().info('Publishing: "%s"' % msg.data)
         self.i += 1

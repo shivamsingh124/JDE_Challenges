@@ -10,6 +10,7 @@ class Listener(Node):
         self.subscription = self.create_subscription(String, 'jde_task', self.listener_callback, 10)
         
     def listener_callback(self, msg):
+        # Output message to console
         self.get_logger().info("I heard: %s" % msg.data)
 
     
